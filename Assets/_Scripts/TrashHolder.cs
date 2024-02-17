@@ -1,0 +1,1 @@
+public class TrashHolder : UnityEngine.MonoBehaviour { public TrashSO Trash; }
