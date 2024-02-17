@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: TestTrash
   m_EditorClassIdentifier: 
   Type: 0
+  Underwater: 0
   TrashGridSize: 1
   Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   Cost: 0
+  TrashAmt: 100
