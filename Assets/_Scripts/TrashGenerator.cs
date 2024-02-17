@@ -34,7 +34,13 @@ public class TrashGenerator : MonoBehaviour
         {
             GameObject obj = Instantiate(Prefab, transform, false);
             obj.transform.position = trash.Item1;
+            obj.transform.position += transform.position;
             obj.GetComponent<TrashHolder>().Trash = trash.Item2;
+            obj.GetComponent<SpriteRenderer>().sprite = trash.Item2.Sprite;
+            obj.transform.rotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0f, 360f));
+            obj.AddComponent<PolygonCollider2D>();
+            if (trash.Item2.Underwater)
+                obj.layer = LayerMask.NameToLayer("IgnoreCollision");
         }
     }
 
