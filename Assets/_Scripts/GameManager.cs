@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     public int inventoryCapacity = 100;
     public int currentlyUsedCapacity;
+    [SerializeField] private GameObject spawnPoint;
+    [SerializeField] private GameObject boat;
 
     private void Awake()
     {
@@ -17,6 +19,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        Respawn();
     }
 
     private void Update()
@@ -26,7 +29,6 @@ public class GameManager : MonoBehaviour
 
     public void CollectedTrash(TrashSO trashSO)
     {
-        Debug.Log(trashSO.ToString());
         switch(trashSO.Type)
         {
             case TrashSO.TrashCollectionType.Small:
@@ -44,9 +46,6 @@ public class GameManager : MonoBehaviour
         }
         float convertedUsedCapacity = ((float)currentlyUsedCapacity) / inventoryCapacity;
         UIManager.Instance.InventoryBarChange(convertedUsedCapacity);
-
-        Debug.Log(currentlyUsedCapacity);
-        Debug.Log("converted " + convertedUsedCapacity);
     }
 
     private void ResetInventoryAmount()
@@ -58,6 +57,16 @@ public class GameManager : MonoBehaviour
     public void DayIsOver()
     {
         Debug.Log("Day has ended");
+        Respawn();
+    }
+
+    public void GameEnded()
+    {
         EndScreenManager.Instance.ShowEndScreen();
+    }
+
+    private void Respawn()
+    {
+        boat.transform.position = spawnPoint.transform.position;
     }
 }
