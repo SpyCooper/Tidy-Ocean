@@ -109,12 +109,5 @@ public class TrashGenerator : Singleton<TrashGenerator>
         GenerateTrash();
     }
 
-    public bool CheckTrashGone()
-    {
-        if(transform.childCount == 0)
-        {
-            return true;
-        }
-        return false;
-    }
+    public bool CheckTrashGone() => transform.childCount == 0;
 }

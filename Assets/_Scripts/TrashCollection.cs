@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,6 +35,17 @@ public class TrashCollection : MonoBehaviour
                 Destroy(th.gameObject); //could be animated
             }
         }
+    }
+
+    public void RemoveRandomTrash()
+    {
+        if (collectedTrash.Count == 0)
+            return;
+        UnityEngine.Random.InitState(DateTime.Now.Second + DateTime.Now.Millisecond);
+        int index = UnityEngine.Random.Range(0, collectedTrash.Count);
+        TrashSO trash = collectedTrash[index];
+        collectedTrash.RemoveAt(index);
+        GameManager.Instance.CollectedTrash(trash, true);
     }
 
     public List<TrashSO> GetCollectedTrash() => collectedTrash;
