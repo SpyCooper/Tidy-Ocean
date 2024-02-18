@@ -16,6 +16,5 @@ MonoBehaviour:
   Underwater: 0
   TrashGridSize: 1
   Sprite: {fileID: 21300000, guid: 654dc338b50e25b418baf37c197bc217, type: 3}
-  Cost: 0
-  TrashAmt: 100
-  TrashSize: 1
+  Cost: 5
+  TrashAmt: 50

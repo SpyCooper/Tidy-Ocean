@@ -8,7 +8,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Trash
   - Water
   - UI
   - IgnoreCollision
@@ -43,4 +43,10 @@ TagManager:
     locked: 0
   - name: topSand
     uniqueID: 2850253367
+    locked: 0
+  - name: trash
+    uniqueID: 4189500203
+    locked: 0
+  - name: Player
+    uniqueID: 3053319065
     locked: 0

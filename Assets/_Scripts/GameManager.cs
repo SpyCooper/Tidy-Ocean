@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public int inventoryCapacity = 100;
+    public int inventoryCapacity;
     public int currentlyUsedCapacity;
     [SerializeField] private GameObject spawnPoint;
     [SerializeField] private GameObject boat;
@@ -15,7 +15,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite fishingNetBoat;
     [SerializeField] private Sprite trashBoat;
 
+    private int trashBoatCost = 10;
+    private int fishingNetBoatCost = 10;
+    private int fishingBoatCost = 5;
+
     private int playerCash;
+
+    private float smallBoatScaleX = 0.85f;
+    private float smallBoatScaleY = 1.29f;
+    private float smallBoatOffsetY = 0.14f;
+
+    private float largeBoatScaleX = 1.77f;
+    private float largeBoatScaleY = 2.06f;
+    private float largeBoatOffsetY = 0.4f;
 
     private void Awake()
     {
@@ -23,6 +35,7 @@ public class GameManager : MonoBehaviour
 
         ResetInventoryAmount();
         PlayerCashReset();
+        CheckAndSwitchBoats();
     }
     private void Start()
     {
@@ -62,7 +75,6 @@ public class GameManager : MonoBehaviour
 
     public void DayIsOver()
     {
-        Debug.Log("Day has ended");
         Respawn();
         UIManager.Instance.ResetTimer();
         TrashGenerator.Instance.ResetTrash();
@@ -83,16 +95,17 @@ public class GameManager : MonoBehaviour
         Debug.Log("Entered Dock Area");
 
         List<TrashSO> TrashInInventory = TrashCollection.Instance.GetCollectedTrash();
-        if(TrashInInventory.Count > 0 )
+        if(TrashInInventory.Count > 0)
         {
             // Has trash in inventory
             foreach(TrashSO trash in TrashInInventory)
             {
-                PlayerCashAddedUpdate(trash.TrashAmt);
+                PlayerCashAddedUpdate(trash.Cost);
             }
 
             TrashCollection.Instance.ClearCollectedTrash();
             UIManager.Instance.InventoryBarReset();
+            currentlyUsedCapacity = 0;
         }
 
         // check if cash can get new boat
@@ -125,27 +138,52 @@ public class GameManager : MonoBehaviour
 
     private void CheckAndSwitchBoats()
     {
-        switch (playerCash)
+        if (playerCash >= trashBoatCost)
         {
-            // row boat
-            case 0:
-                boat.transform.GetComponent<SpriteRenderer>().sprite = rowBoat;
-                break;
-            // fishing boat
-            case 1000:
-                boat.transform.GetComponent<SpriteRenderer>().sprite = fishingBoat;
-                break;
-            // fishing boat with net
-            case 10000:
-                boat.transform.GetComponent<SpriteRenderer>().sprite = fishingNetBoat;
-                break;
-            // trash boat
-            case 100000:
-                boat.transform.GetComponent<SpriteRenderer>().sprite = trashBoat;
-                break;
-            default:
-                break;
+            boat.transform.GetComponent<SpriteRenderer>().sprite = trashBoat;
+            inventoryCapacity = 200;
+            PlayerCashSubtractedUpdate(trashBoatCost);
+            TrashCollection.Instance.CanCollectUnderWater = true;
+            TrashCollection.Instance.MaxTrashCollection = TrashSO.TrashCollectionType.MAX;
+            BoatIsSmall(false);
+        }
+        else if (playerCash >= fishingNetBoatCost)
+        {
+            boat.transform.GetComponent<SpriteRenderer>().sprite = fishingNetBoat;
+            inventoryCapacity = 150;
+            PlayerCashSubtractedUpdate(fishingNetBoatCost);
+            TrashCollection.Instance.CanCollectUnderWater = true;
+            TrashCollection.Instance.MaxTrashCollection = TrashSO.TrashCollectionType.Medium;
+            BoatIsSmall(true);
+        }
+        else if (playerCash >= fishingBoatCost)
+        {
+            boat.transform.GetComponent<SpriteRenderer>().sprite = fishingBoat;
+            inventoryCapacity = 100;
+            PlayerCashSubtractedUpdate(fishingBoatCost);
+            TrashCollection.Instance.MaxTrashCollection = TrashSO.TrashCollectionType.Medium;
+            BoatIsSmall(true);
+        }
+        else if(playerCash == 0)
+        {
+            boat.transform.GetComponent<SpriteRenderer>().sprite = rowBoat;
+            inventoryCapacity = 50;
+            TrashCollection.Instance.MaxTrashCollection = TrashSO.TrashCollectionType.Small;
+            BoatIsSmall(true);
+        }
+    }
 
+    private void BoatIsSmall(bool isSmall)
+    {
+        if (isSmall)
+        {
+            boat.GetComponent<BoxCollider2D>().offset = new Vector2(0f, smallBoatOffsetY);
+            boat.GetComponent<BoxCollider2D>().size = new Vector2(smallBoatScaleX, smallBoatScaleY);
+        }
+        else
+        {
+            boat.GetComponent<BoxCollider2D>().offset = new Vector2(0f, largeBoatOffsetY);
+            boat.GetComponent<BoxCollider2D>().size = new Vector2(largeBoatScaleX, largeBoatScaleY);
         }
     }
 }

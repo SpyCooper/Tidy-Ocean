@@ -8,8 +8,8 @@ public class TrashCollection : MonoBehaviour
 {
     public static TrashCollection Instance { get; private set; }
 
-    private TrashSO.TrashCollectionType MaxTrashCollection = TrashSO.TrashCollectionType.Small;
-    private bool CanCollectUnderWater = false;
+    public TrashSO.TrashCollectionType MaxTrashCollection = TrashSO.TrashCollectionType.Small;
+    public bool CanCollectUnderWater = false;
 
     private List<TrashSO> collectedTrash;
 
@@ -17,10 +17,6 @@ public class TrashCollection : MonoBehaviour
     {
         Instance = this;
         GetComponent<BoxCollider2D>().isTrigger = true;
-    }
-
-    private void Start()
-    {
         collectedTrash = new List<TrashSO>();
     }
 
