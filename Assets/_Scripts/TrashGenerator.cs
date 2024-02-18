@@ -5,12 +5,22 @@ using UnityEngine;
 
 public class TrashGenerator : MonoBehaviour
 {
+    public static TrashGenerator Instance { get; private set; }
+
     [SerializeField] private float CellSize = 1f;
     [SerializeField] private float MapSize = 10f;
     [SerializeField] private TrashSO[] TrashList; ///note: should be from largest to smallest
     [SerializeField] private GameObject Prefab;
 
-    private void Start() => GenerateTrash();
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    private void Start()
+    {
+        GenerateTrash();
+    }
 
     public void GenerateTrash()
     {
@@ -98,5 +108,14 @@ public class TrashGenerator : MonoBehaviour
         }
 
         public Cell(int x, int y, float cSize) => localPosition = (Vector2)(position = new Vector2Int(x, y)) * (cellSize = cSize);
+    }
+
+    public void ResetTrash()
+    {
+        var children = new List<GameObject>();
+        foreach (Transform child in transform) children.Add(child.gameObject);
+        children.ForEach(child => Destroy(child));
+
+        GenerateTrash();
     }
 }
