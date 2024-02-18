@@ -51,10 +51,6 @@ public class GameManager : MonoBehaviour
         Respawn();
     }
 
-    private void Update()
-    {
-    }
-
     public void CollectedTrash(TrashSO trashSO)
     {
         switch(trashSO.Type)
@@ -66,7 +62,7 @@ public class GameManager : MonoBehaviour
                 currentlyUsedCapacity += 15;
                 break;
             case TrashSO.TrashCollectionType.Large:
-                currentlyUsedCapacity = 25;
+                currentlyUsedCapacity += 25;
                 break;
             default:
                 currentlyUsedCapacity += 0;

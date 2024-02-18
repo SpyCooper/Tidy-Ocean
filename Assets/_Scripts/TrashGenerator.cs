@@ -3,24 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TrashGenerator : MonoBehaviour
+public class TrashGenerator : Singleton<TrashGenerator>
 {
-    public static TrashGenerator Instance { get; private set; }
-
     [SerializeField] private float CellSize = 1f;
     [SerializeField] private float MapSize = 10f;
     [SerializeField] private TrashSO[] TrashList; ///note: should be from largest to smallest
     [SerializeField] private GameObject Prefab;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
-
-    private void Start()
-    {
-        GenerateTrash();
-    }
+    private void Start() => GenerateTrash();
 
     public void GenerateTrash()
     {
