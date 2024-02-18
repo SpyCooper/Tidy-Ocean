@@ -21,8 +21,6 @@ public class EndScreenManager : MonoBehaviour
         mainMenuButton.onClick.AddListener(() => {
             Loader.Load(Loader.Scene.MainMenuScene);
         });
-
-        HideEndScreen();
     }
 
     public void HideEndScreen()
