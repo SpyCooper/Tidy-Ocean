@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class TrashCollection : Singleton<TrashCollection>
 
     private void Awake() => GetComponent<BoxCollider2D>().isTrigger = true;
 
+    public event EventHandler TrashCollected;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         TrashHolder th;
@@ -18,6 +21,9 @@ public class TrashCollection : Singleton<TrashCollection>
         if((CanCollectUnderWater || th.Trash.Underwater == false) && (int)MaxTrashCollection >= (int)th.Trash.Type)
         {
             collectedTrash.Add(th.Trash);
+
+            GameManager.Instance.CollectedTrash(th.Trash);
+
             Destroy(th.gameObject); //could be animated
         }
     }

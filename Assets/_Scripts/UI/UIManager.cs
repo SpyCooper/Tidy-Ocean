@@ -6,9 +6,16 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance { get; private set; }
+
     [SerializeField] private Image timerFillBar;
     [SerializeField] private Image inventoryFillBar;
     [SerializeField] private TextMeshProUGUI cashAmountText;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -23,14 +30,12 @@ public class UIManager : MonoBehaviour
     {
         if(timerFillBar.fillAmount > 0f)
         {
-            timerFillBar.fillAmount -= (Time.deltaTime/10);
+            timerFillBar.fillAmount -= (Time.deltaTime/(60*10));
         }
-        if(inventoryFillBar.fillAmount <= 0f)
+        else
         {
-            // let the GameManager know that the day is over
+            GameManager.Instance.DayIsOver();
         }
-
-        InventoryBarChange(0.1f);
     }
 
     public void TimerReset()
@@ -39,11 +44,11 @@ public class UIManager : MonoBehaviour
     }
 
     // this can be changed but the max the fill can be is 1 and takes in a float
-    public void InventoryBarChange(float weightAdded)
+    public void InventoryBarChange(float totalWeight)
     {
-        if(inventoryFillBar.fillAmount >= 1f)
+        if(inventoryFillBar.fillAmount < 1f)
         {
-            inventoryFillBar.fillAmount += (weightAdded/100f);
+            inventoryFillBar.fillAmount += totalWeight;
         }
     }
     public void InventoryBarReset()

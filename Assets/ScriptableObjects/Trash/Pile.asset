@@ -18,3 +18,4 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: bb4df36d37b851f42a01734e931f506e, type: 3}
   Cost: 0
   TrashAmt: 25
+  TrashSize: 50
