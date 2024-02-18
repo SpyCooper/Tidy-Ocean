@@ -10,7 +10,7 @@ public class TrashGenerator : Singleton<TrashGenerator>
     [SerializeField] private TrashSO[] TrashList; ///note: should be from largest to smallest
     [SerializeField] private GameObject Prefab;
 
-    private void Start() => GenerateTrash();
+    private void Start() => ResetTrash();
 
     public void GenerateTrash()
     {
@@ -107,6 +107,7 @@ public class TrashGenerator : Singleton<TrashGenerator>
         children.ForEach(child => Destroy(child));
 
         GenerateTrash();
+        AStarGrid.Instance.RecheckCollisionAndPaths();
     }
 
     public bool CheckTrashGone() => transform.childCount == 0;
