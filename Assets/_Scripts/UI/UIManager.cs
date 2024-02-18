@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image timerFillBar;
     [SerializeField] private Image inventoryFillBar;
     [SerializeField] private TextMeshProUGUI cashAmountText;
+    [SerializeField] private GameObject returnToDockText;
 
     private void Awake()
     {
@@ -29,7 +30,7 @@ public class UIManager : MonoBehaviour
     {
         if(timerFillBar.fillAmount > 0f)
         {
-            timerFillBar.fillAmount -= (Time.deltaTime/(60*10));
+            timerFillBar.fillAmount -= (Time.deltaTime/(60*5));
         }
         else
         {
@@ -49,10 +50,20 @@ public class UIManager : MonoBehaviour
         {
             inventoryFillBar.fillAmount = totalWeight;
         }
+        
+        if(totalWeight >= 1f)
+        {
+            returnToDockText.SetActive(true);
+        }
+        else
+        {
+            returnToDockText.SetActive(false);
+        }
     }
     public void InventoryBarReset()
     {
         inventoryFillBar.fillAmount = 0f;
+        returnToDockText.SetActive(false);
     }
 
     // puts the inputted integer as the value, it should be calculated in the GameManager

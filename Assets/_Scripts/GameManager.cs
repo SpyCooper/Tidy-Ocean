@@ -16,9 +16,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite fishingNetBoat;
     [SerializeField] private Sprite trashBoat;
 
-    private int trashBoatCost = 10;
-    private int fishingNetBoatCost = 10;
-    private int fishingBoatCost = 5;
+    private int trashBoatCost = 500;
+    private int fishingNetBoatCost = 300;
+    private int fishingBoatCost = 100;
 
     private int playerCash;
 
