@@ -61,4 +61,9 @@ public class UIManager : MonoBehaviour
     {
         cashAmountText.text = "$" + cashAmountTotal;
     }
+
+    public void ResetTimer()
+    {
+        timerFillBar.fillAmount = 1f;
+    }
 }

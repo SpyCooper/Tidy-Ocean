@@ -58,6 +58,9 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Day has ended");
         Respawn();
+        UIManager.Instance.ResetTimer();
+
+        // add respawn trash
     }
 
     public void GameEnded()
