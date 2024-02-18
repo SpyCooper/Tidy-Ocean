@@ -38,6 +38,9 @@ public class GameManager : MonoBehaviour
     private float largeBoatCollectionScaleY = 2.1f;
     private float largeBoatCollectionOffsetY = 0.4f;
 
+    [SerializeField] private Animator animator;
+    private string endofGameTriggerName = "EndOfGame";
+
     private void Awake()
     {
         Instance = this;
@@ -49,6 +52,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Respawn();
+
+        GameEnded();
     }
 
     public void CollectedTrash(TrashSO trashSO, bool subtract = false)
@@ -87,10 +92,17 @@ public class GameManager : MonoBehaviour
 
     public void GameEnded()
     {
+        //EndScreenManager.Instance.ShowEndScreen();
+        animator.SetTrigger(endofGameTriggerName);
+        StartCoroutine(EndOfGame());
+    }
+    private IEnumerator EndOfGame()
+    {
+        yield return new WaitForSeconds(1.8f);
         EndScreenManager.Instance.ShowEndScreen();
     }
 
-    private void Respawn()
+        private void Respawn()
     {
         boat.transform.position = spawnPoint.transform.position;
     }
