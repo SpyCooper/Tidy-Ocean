@@ -15,7 +15,7 @@ public class AStarEntity : MonoBehaviour
     {
         FindNewTarget();
         if (path.Count > 0)
-            rb.velocity = Vector3.Lerp(transform.position, path[0], 1f) - transform.position;            
+            rb.velocity = Vector3.Lerp(transform.position, path[0], 1f) - transform.position;
     }
 
     protected virtual void FindNewTarget() { return; }

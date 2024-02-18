@@ -33,6 +33,8 @@ public class TrashCollection : MonoBehaviour
                 GameManager.Instance.CollectedTrash(th.Trash);
 
                 Destroy(th.gameObject); //could be animated
+
+                AStarGrid.Instance.RecheckCollisionAndPaths();
             }
         }
     }

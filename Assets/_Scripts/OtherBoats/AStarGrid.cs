@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AStarGrid : Singleton<AStarGrid>
 {
@@ -36,6 +37,12 @@ public class AStarGrid : Singleton<AStarGrid>
             for (int y = 0; y < grid.GetLength(1); y++)
                 grid[x, y] = new ConstNode(x, y);
         UpdateCollision();
+    }
+
+    public void RecheckCollisionAndPaths()
+    {
+        UpdateCollision();
+        RecreatePath.Invoke(); 
     }
 
     private void UpdateCollision()
@@ -89,11 +96,11 @@ public class AStarGrid : Singleton<AStarGrid>
         return Vector2Int.RoundToInt(p);
     }
 
-    public List<Vector3> FindPath(Vector3 _start, Vector3 _end, bool AirTraversabel = true, bool GroundTraversable = true, bool WallTraversable = true, bool CeilingTraversable = true)
+    public List<Vector3> FindPath(Vector3 _start, Vector3 _end)
     {
         Vector2Int startVector = IndexFromWorldPoint(_start);
         Vector2Int endVector = IndexFromWorldPoint(_end);
-        PathNode[,] aStarGrid = new PathNode[grid.GetLength(0) - 1, grid.GetLength(1) - 1];
+        PathNode[,] aStarGrid = new PathNode[grid.GetLength(0), grid.GetLength(1)];
         for (int x = 0; x < grid.GetLength(0); x++)
             for (int y = 0; y < grid.GetLength(1); y++)
                 aStarGrid[x, y] = new PathNode(grid[x, y]);
@@ -157,4 +164,6 @@ public class AStarGrid : Singleton<AStarGrid>
             return 14 * distY + 10 * (distX - distY);
         return 14 * distX + 10 * (distY - distX);
     }
+
+    public UnityEvent RecreatePath = new UnityEvent();
 }

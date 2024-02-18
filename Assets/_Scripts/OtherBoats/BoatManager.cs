@@ -1,0 +1,1 @@
+public class BoatManager : Singleton<BoatManager> { public UnityEngine.Transform[] points; }
