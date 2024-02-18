@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public int currentlyUsedCapacity;
     [SerializeField] private GameObject spawnPoint;
     [SerializeField] private GameObject boat;
+    [SerializeField] private GameObject trashCollectionHitbox;
     [SerializeField] private Sprite rowBoat;
     [SerializeField] private Sprite fishingBoat;
     [SerializeField] private Sprite fishingNetBoat;
@@ -28,6 +29,14 @@ public class GameManager : MonoBehaviour
     private float largeBoatScaleX = 1.77f;
     private float largeBoatScaleY = 2.06f;
     private float largeBoatOffsetY = 0.4f;
+
+    private float smallBoatCollectionScaleX = 1.09f;
+    private float smallBoatCollectionScaleY = 1.36f;
+    private float smallBoatCollectionOffsetY = 0.12f;
+
+    private float largeBoatCollectionScaleX = 1.81f;
+    private float largeBoatCollectionScaleY = 2.1f;
+    private float largeBoatCollectionOffsetY = 0.4f;
 
     private void Awake()
     {
@@ -179,11 +188,15 @@ public class GameManager : MonoBehaviour
         {
             boat.GetComponent<BoxCollider2D>().offset = new Vector2(0f, smallBoatOffsetY);
             boat.GetComponent<BoxCollider2D>().size = new Vector2(smallBoatScaleX, smallBoatScaleY);
+            trashCollectionHitbox.GetComponent<BoxCollider2D>().offset = new Vector2(0f, smallBoatCollectionOffsetY);
+            trashCollectionHitbox.GetComponent<BoxCollider2D>().size = new Vector2(smallBoatCollectionScaleX, smallBoatCollectionScaleY);
         }
         else
         {
-            boat.GetComponent<BoxCollider2D>().offset = new Vector2(0f, largeBoatOffsetY);
+            boat.GetComponent<BoxCollider2D>().offset = new Vector2(0f, smallBoatOffsetY);
             boat.GetComponent<BoxCollider2D>().size = new Vector2(largeBoatScaleX, largeBoatScaleY);
+            trashCollectionHitbox.GetComponent<BoxCollider2D>().offset = new Vector2(0f, largeBoatCollectionOffsetY);
+            trashCollectionHitbox.GetComponent<BoxCollider2D>().size = new Vector2(largeBoatCollectionScaleX, largeBoatCollectionScaleY);
         }
     }
 }

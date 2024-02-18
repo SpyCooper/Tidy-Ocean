@@ -3188,7 +3188,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.12}
+  m_Offset: {x: 0, y: 0.4}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3199,7 +3199,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.09, y: 1.36}
+  m_Size: {x: 1.81, y: 2.1}
   m_EdgeRadius: 0
 --- !u!1 &1698244719
 GameObject:
@@ -3416,6 +3416,7 @@ MonoBehaviour:
   currentlyUsedCapacity: 0
   spawnPoint: {fileID: 962144057}
   boat: {fileID: 153182599}
+  trashCollectionHitbox: {fileID: 1604721751}
   rowBoat: {fileID: 21300000, guid: 8c3303b4b8c1ace449230cea5681b453, type: 3}
   fishingBoat: {fileID: 21300000, guid: 7616da2861760844489a927164bf2036, type: 3}
   fishingNetBoat: {fileID: 21300000, guid: 600af8b4f7011f14b82834c82e476e8e, type: 3}
