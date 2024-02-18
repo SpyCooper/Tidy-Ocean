@@ -119,7 +119,7 @@ public class TrashGenerator : MonoBehaviour
         GenerateTrash();
     }
 
-    public bool CheckTrash()
+    public bool CheckTrashGone()
     {
         if(transform.childCount == 0)
         {

@@ -23,5 +23,8 @@ public class CharacterController : Singleton<CharacterController>
         Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) => rb.AddForceAtPosition(Vector2.down * moveSpeed / 5, collision.transform.position);
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        rb.AddForceAtPosition(Vector2.down * moveSpeed / 5, collision.transform.position);
+    }
 }

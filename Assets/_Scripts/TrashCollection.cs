@@ -4,14 +4,25 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class TrashCollection : Singleton<TrashCollection>
+public class TrashCollection : MonoBehaviour
 {
+    public static TrashCollection Instance { get; private set; }
+
     private TrashSO.TrashCollectionType MaxTrashCollection = TrashSO.TrashCollectionType.Small;
     private bool CanCollectUnderWater = false;
 
-    private void Awake() => GetComponent<BoxCollider2D>().isTrigger = true;
+    private List<TrashSO> collectedTrash;
 
-    public event EventHandler TrashCollected;
+    private void Awake()
+    {
+        Instance = this;
+        GetComponent<BoxCollider2D>().isTrigger = true;
+    }
+
+    private void Start()
+    {
+        collectedTrash = new List<TrashSO>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -32,7 +43,18 @@ public class TrashCollection : Singleton<TrashCollection>
         }
     }
 
-    private List<TrashSO> collectedTrash = new List<TrashSO>();
+    public List<TrashSO> GetCollectedTrash() 
+    {
+        return collectedTrash;
+    }
+
+    public void ClearCollectedTrash()
+    {
+        if(collectedTrash != null)
+        {
+            collectedTrash.Clear();
+        }
+    }
 
     public int TrashMoney()
     {
