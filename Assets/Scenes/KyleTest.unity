@@ -613,6 +613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 400
   turnSpeed: 100
+  dock: {fileID: 962144058}
 --- !u!50 &153182603
 Rigidbody2D:
   serializedVersion: 4
