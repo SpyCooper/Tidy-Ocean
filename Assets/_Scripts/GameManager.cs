@@ -42,8 +42,11 @@ public class GameManager : MonoBehaviour
                 currentlyUsedCapacity += 0;
                 break;
         }
-        float convertedUsedCapacity = (float)currentlyUsedCapacity / inventoryCapacity;
+        float convertedUsedCapacity = ((float)currentlyUsedCapacity) / inventoryCapacity;
         UIManager.Instance.InventoryBarChange(convertedUsedCapacity);
+
+        Debug.Log(currentlyUsedCapacity);
+        Debug.Log("converted " + convertedUsedCapacity);
     }
 
     private void ResetInventoryAmount()

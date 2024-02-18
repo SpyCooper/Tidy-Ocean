@@ -16,15 +16,19 @@ public class TrashCollection : Singleton<TrashCollection>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         TrashHolder th;
-        if (!(th = collision.gameObject.GetComponent<TrashHolder>()))
-            return;
-        if((CanCollectUnderWater || th.Trash.Underwater == false) && (int)MaxTrashCollection >= (int)th.Trash.Type)
+
+        if (GameManager.Instance.currentlyUsedCapacity < GameManager.Instance.inventoryCapacity)
         {
-            collectedTrash.Add(th.Trash);
+            if (!(th = collision.gameObject.GetComponent<TrashHolder>()) || GameManager.Instance.currentlyUsedCapacity >= GameManager.Instance.inventoryCapacity)
+                return;
+            if ((CanCollectUnderWater || th.Trash.Underwater == false) && (int)MaxTrashCollection >= (int)th.Trash.Type)
+            {
+                collectedTrash.Add(th.Trash);
 
-            GameManager.Instance.CollectedTrash(th.Trash);
+                GameManager.Instance.CollectedTrash(th.Trash);
 
-            Destroy(th.gameObject); //could be animated
+                Destroy(th.gameObject); //could be animated
+            }
         }
     }
 

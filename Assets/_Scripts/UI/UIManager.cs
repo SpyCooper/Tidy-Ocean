@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
     {
         if(inventoryFillBar.fillAmount < 1f)
         {
-            inventoryFillBar.fillAmount += totalWeight;
+            inventoryFillBar.fillAmount = totalWeight;
         }
     }
     public void InventoryBarReset()
