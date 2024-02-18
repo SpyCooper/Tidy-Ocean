@@ -16,8 +16,6 @@ public class MainMenuManager : MonoBehaviour
             Application.Quit();
         });
         startButton.onClick.AddListener(() => {
-            Debug.Log("Move to Start");
-            // TODO - add loading between scenes
             Loader.Load(Loader.Scene.KyleTest);
         });
 

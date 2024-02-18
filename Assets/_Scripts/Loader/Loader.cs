@@ -9,7 +9,7 @@ public class Loader
 
     public enum Scene
     {
-        MainMenu,
+        MainMenuScene,
         KyleTest,
         LoadingScene,
     }

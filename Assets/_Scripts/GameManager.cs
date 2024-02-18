@@ -58,5 +58,6 @@ public class GameManager : MonoBehaviour
     public void DayIsOver()
     {
         Debug.Log("Day has ended");
+        EndScreenManager.Instance.ShowEndScreen();
     }
 }
