@@ -118,4 +118,13 @@ public class TrashGenerator : MonoBehaviour
 
         GenerateTrash();
     }
+
+    public bool CheckTrash()
+    {
+        if(transform.childCount == 0)
+        {
+            return true;
+        }
+        return false;
+    }
 }
