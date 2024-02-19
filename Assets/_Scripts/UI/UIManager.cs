@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
     {
         if(timerFillBar.fillAmount > 0f)
         {
-            timerFillBar.fillAmount -= (Time.deltaTime/(60*5));
+            timerFillBar.fillAmount -= (Time.deltaTime/(60*8));
         }
         else
         {

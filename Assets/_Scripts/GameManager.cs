@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -41,6 +42,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Animator animator;
     private string endofGameTriggerName = "EndOfGame";
 
+    private bool fishingBoatBought = false;
+    private bool fishingBoatNetBought = false;
+    private bool trashBoatBought = false;
+
     private void Awake()
     {
         Instance = this;
@@ -59,18 +64,19 @@ public class GameManager : MonoBehaviour
         switch(trashSO.Type)
         {
             case TrashSO.TrashCollectionType.Small:
-                currentlyUsedCapacity += 5 * (subtract ? -1 : 1);
+                currentlyUsedCapacity = currentlyUsedCapacity + (5 * (subtract ? -1 : 1));
                 break;
             case TrashSO.TrashCollectionType.Medium: 
-                currentlyUsedCapacity += 15 * (subtract ? -1 : 1);
+                currentlyUsedCapacity = currentlyUsedCapacity + (15 * (subtract ? -1 : 1));
                 break;
             case TrashSO.TrashCollectionType.Large:
-                currentlyUsedCapacity += 25 * (subtract ? -1 : 1);
+                currentlyUsedCapacity = currentlyUsedCapacity + (25 * (subtract ? -1 : 1));
                 break;
             default:
                 currentlyUsedCapacity += 0;
                 break;
         }
+        //InventoryBarChange();
         float convertedUsedCapacity = ((float)currentlyUsedCapacity) / inventoryCapacity;
         UIManager.Instance.InventoryBarChange(convertedUsedCapacity);
     }
@@ -83,9 +89,10 @@ public class GameManager : MonoBehaviour
 
     public void DayIsOver()
     {
-        Respawn();
-        UIManager.Instance.ResetTimer();
         TrashGenerator.Instance.ResetTrash();
+        TrashCollection.Instance.ClearCollectedTrash();
+        UIManager.Instance.ResetTimer();
+        Respawn();
     }
 
     public void GameEnded()
@@ -96,6 +103,8 @@ public class GameManager : MonoBehaviour
     private void Respawn()
     {
         boat.transform.position = spawnPoint.transform.position;
+        boat.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        boat.GetComponent<Rigidbody2D>().angularVelocity = 0;
     }
 
     public void EnteredDock()
@@ -146,7 +155,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckAndSwitchBoats()
     {
-        if (playerCash >= trashBoatCost)
+        if (playerCash >= trashBoatCost && !trashBoatBought)
         {
             boat.transform.GetComponent<SpriteRenderer>().sprite = trashBoat;
             inventoryCapacity = 200;
@@ -154,8 +163,9 @@ public class GameManager : MonoBehaviour
             TrashCollection.Instance.CanCollectUnderWater = true;
             TrashCollection.Instance.MaxTrashCollection = TrashSO.TrashCollectionType.MAX;
             BoatIsSmall(false);
+            trashBoatBought = true;
         }
-        else if (playerCash >= fishingNetBoatCost)
+        else if (playerCash >= fishingNetBoatCost && !fishingBoatNetBought)
         {
             boat.transform.GetComponent<SpriteRenderer>().sprite = fishingNetBoat;
             inventoryCapacity = 150;
@@ -163,14 +173,16 @@ public class GameManager : MonoBehaviour
             TrashCollection.Instance.CanCollectUnderWater = true;
             TrashCollection.Instance.MaxTrashCollection = TrashSO.TrashCollectionType.Medium;
             BoatIsSmall(true);
+            fishingBoatNetBought = true;
         }
-        else if (playerCash >= fishingBoatCost)
+        else if (playerCash >= fishingBoatCost && !fishingBoatBought)
         {
             boat.transform.GetComponent<SpriteRenderer>().sprite = fishingBoat;
             inventoryCapacity = 100;
             PlayerCashSubtractedUpdate(fishingBoatCost);
             TrashCollection.Instance.MaxTrashCollection = TrashSO.TrashCollectionType.Medium;
-            BoatIsSmall(true);
+            BoatIsSmall(true); 
+            fishingBoatBought = true;
         }
         else if(playerCash == 0)
         {
@@ -180,6 +192,27 @@ public class GameManager : MonoBehaviour
             BoatIsSmall(true);
         }
     }
+
+    //public void InventoryBarChange()
+    //{
+    //    switch (trashSO.Type)
+    //    {
+    //        case TrashSO.TrashCollectionType.Small:
+    //            currentlyUsedCapacity += 5 * (subtract ? -1 : 1);
+    //            break;
+    //        case TrashSO.TrashCollectionType.Medium:
+    //            currentlyUsedCapacity += 15 * (subtract ? -1 : 1);
+    //            break;
+    //        case TrashSO.TrashCollectionType.Large:
+    //            currentlyUsedCapacity += 25 * (subtract ? -1 : 1);
+    //            break;
+    //        default:
+    //            currentlyUsedCapacity += 0;
+    //            break;
+    //    }
+    //    float convertedUsedCapacity = ((float)currentlyUsedCapacity) / inventoryCapacity;
+    //    UIManager.Instance.InventoryBarChange(convertedUsedCapacity);
+    //}
 
     private void BoatIsSmall(bool isSmall)
     {
