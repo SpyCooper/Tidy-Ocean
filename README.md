@@ -1,5 +1,6 @@
 # Tidy-Ocean
 This was a game made in 48 hours for Climate Change Game Jam 2024.
+
 This is the itch.io link to the game: https://spycooper.itch.io/tidy-ocean 
 
 ## Project Description
@@ -13,10 +14,14 @@ After the timer in the top right runs out, the next day will begin. The player w
 
 If the player hits the boundaries of the map or a freighter, they will lose 1 random piece of trash from their inventory if they have any.
 
+## Instructions to run game without Unity3D.
+1. Download files in the "Tidy Ocean Compressed Executable" folder
+2. Run the "Tidy Ocean".exe
+
 ## Instructions to run game with Unity3D.
 1. Download all the files in the GitHub to a folder
 2. Add the folder to the unity engine that is running Unity version 2022.3.18f
-3. Open \Tidy Ocean\Assets\Scenes\MainMenuScene.unity
+3. Open \"Tidy Ocean"\Assets\Scenes\MainMenuScene.unity
 4. Click the play button at the view window
 
 ## Controls
